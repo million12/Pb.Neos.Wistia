@@ -15,7 +15,7 @@ Requires Neos ~2.1.
 
 Install via composer:
 ```
-composer require --save pb/neos-wistia
+composer require pb/neos-wistia:dev-master
 ```
 
 ## Author(s)
