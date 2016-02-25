@@ -1,0 +1,100 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<figure{attributes -> f:format.raw()}>
+<f:if condition="{videoId}">
+  <f:then>
+    <f:switch expression="{embedMode}">
+
+
+      <f:case value="inline">
+        <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
+        <f:if condition="{responsive}">
+          <f:then>
+            <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+              <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                <div class="wistia_embed wistia_async_{videoId} videoFoam=true" style="height:100%;width:100%">&nbsp;</div>
+              </div>
+            </div>
+          </f:then>
+
+          <f:else>
+            <div class="wistia_embed wistia_async_{videoId}" style="width:{width}px;height:{height}px">&nbsp;</div>
+          </f:else>
+        </f:if>
+      </f:case>
+
+
+      <f:case value="inlineIframe">
+        <f:if condition="{responsive}">
+          <f:then>
+            <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+              <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                <iframe src="//fast.wistia.net/embed/iframe/{videoId}?videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="100%" height="100%"></iframe>
+              </div>
+            </div>
+          </f:then>
+
+          <f:else>
+            <iframe src="//fast.wistia.net/embed/iframe/{videoId}" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="{width}" height="{height}"></iframe>
+          </f:else>
+
+          <f:comment>
+            Seems like Wistia recommends putting this script *after*
+            the above code in inline fallback mode.
+          </f:comment>
+          <script src="//fast.wistia.net/assets/external/E-v1.js" async></script>
+        </f:if>
+      </f:case>
+
+
+      <f:case value="popoverThumbnail">
+        <script src="//fast.wistia.net/assets/external/E-v1.js" async></script>
+        <f:if condition="{responsive}">
+          <f:then>
+            <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+              <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                <span class="wistia_embed wistia_async_{videoId} popover=true popoverAnimateThumbnail=true videoFoam=true" style="display:inline-block;height:100%;width:100%">&nbsp;</span>
+              </div>
+            </div>
+          </f:then>
+
+          <f:else>
+            <span class="wistia_embed wistia_async_{videoId} popover=true popoverAnimateThumbnail=true" style="display:inline-block;height:{height}px;width:{width}px">&nbsp;</span>
+          </f:else>
+        </f:if>
+      </f:case>
+
+
+      <f:case value="popoverLink">
+        <script src="//fast.wistia.net/assets/external/E-v1.js" async></script>
+        <span class="wistia_embed wistia_async_{videoId} popover=true popoverContent=link" style="display:inline">
+          {popoverLinkContent -> f:format.raw()}
+        </span>
+      </f:case>
+    </f:switch>
+  </f:then>
+
+  <f:else>
+    <f:if condition="{neos:rendering.inEditMode()}">
+      <div class="pb-neos-wistia-video__no-video-id">
+        <p class="text-center">Please specify video ID.</p>
+      </div>
+
+      <style>
+        .pb-neos-wistia-video__no-video-id {
+          min-height: 320px;
+          text-align: center;
+        }
+        .pb-neos-wistia-video__no-video-id:after {
+          content: '';
+          width: 335px;
+          height: 70px;
+          display: block;
+          margin: 0 auto;
+          background-size: cover;
+          background-image: url(data:image/jpeg;base64,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vuCaosaBd2kSU23Yyux7bEZ83KNtRpobc8JPHlq2YXRs+hYXRs/WX4n+vR8WiouP/SouP/SHH1urE/Q1qaSKEHtHpyBAgggNH6SUf0vbXw/llXz/AG58lFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXI3fuOxRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXJRclFyUXIlNFNGV9PllFyUXPrIkSJEiRIkSJEiRIkSJEiRIkSJEiRIkSJEiRIkSJEiRIkSJEiRIkSJEiRIkSJEiRIkN+ZIkSJEiRIkSJEiRIkSJEiRIkSGYZpEiRSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWJftSKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZZSyylllLLKWWUsspZY+NU8jW/cUsspZf+b/P+39bd+35N6/+dlvcbTTL/wAXL/xcv/Fy/wDFy/8AFy/8XL/xcv8Axcv/ABcv/Fy/8XL/AMXL/wAXL/xcv/Fy/wDFy/8AFy/8XL/xcv8Axcv/ABcekc/FyN7pn/izNMGf4XJXlNNz5nwJ5dJVFOc+yPoSdWSonwN5J+0+jtXX+jUjaWrUNWUKnoMctLo/0ghx5GvuT+35BsFHXKVBm10t0Ie92GcvU/Aw6ILhh8JGSU1QbuSDPf69Na7CRRWl/pKSb7xGs4kGKm0hql2iNRcpbuhrZpOW29ZPED5MSSQthL50i9TIgTNH9mxC7CX/ADH/2gAMAwEAAgADAAAAENc88888888888888w88888888888888888888888881+NPP8/fPNPPNHPPONPPPPPNPPNPPOPPPPPPPPPPPPE/s/wBj11ejTGSChghyyCjQxhijBiBYzwhwRzRDxyzzwXsDDDBODBADBDDDBDBCCDCDDBBCCBhDCDDBCDDDDjA88888888888888888888888888888w888888888+w/wA88888888888888888888888888883++++++++++H88888888888888888888888888888888404008488888888888888888888888888888888888skAEEAw8888888888888888888888888888888888888888888888//xAAqEQACAAUCBAUFAAAAAAAAAAAAARExQVHxECEgQMHwMFBhcNFxgZGhsf/aAAgBAwEBPxDy6O8LEVGAnFRXkshFikIbd0Qie6aOsRTEq/g2hOxGQ0U0fBP79/B6+pVCp3QsWsfwXT5FRioKmlhSKcPUejrrfge5BwNJtO3LsdJ1UfDTO2nDSHO/quvhrsfTn9kDYpmaM0ZozRmjNGaM0ZozQrSqzi29gP/EACcRAAIBAgUEAQUAAAAAAAAAAAARATFBICFRYfBQccHRkRBAcIGx/9oACAECAQE/EOnRLew4+OjTUpg3iiCHcinxBMQ4XKtj0WhzlmmSq2PGGleOMWS28k0km/Lmprqdqsv+/RrHbyTeSb/TUkvggj+GnLGnLEWNCPZFsEw4UmxgWb6IxjGMYxjGMYxjGMYxjGMYxjGMgYxjGMYxjLj+/YxjGMYxj/AP/8QALBAAAgECBgICAgICAwEAAAAAAAERYZEhMYHR8PFBURBxocEgsTDhQFBgcP/aAAgBAQABPxDXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62EpDmPtbCRe7/wCjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62EZJv8A6Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbGu62Nd1sa7rY13WxrutjXdbfC1nv8CTzYCBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBECIEQIgRAiBE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);
+        }
+      </style>
+    </f:if>
+  </f:else>
+</f:if>
+</figure>

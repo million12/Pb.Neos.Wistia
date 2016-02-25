@@ -1,0 +1,13 @@
+prototype(Pb.Neos.Wistia:Video) < prototype(TYPO3.Neos:Content) {
+    templatePath = 'resource://Pb.Neos.Wistia/Private/Templates/NodeTypes/Wistia.html'
+
+    responsive = ${q(node).property('size') == 'responsive' ? true : false}
+
+    popoverLinkText = ${q(node).property('popoverLinkText') ? q(node).property('popoverLinkText') : 'Watch Video'}
+
+    popoverLinkContent = ${
+        q(node).property('popoverLinkHtml')
+            ? q(node).property('popoverLinkHtml')
+            : '<a>' + this.popoverLinkText + '</a>'
+    }
+}

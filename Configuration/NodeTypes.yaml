@@ -1,0 +1,140 @@
+'Pb.Neos.Wistia:Video':
+  superTypes:
+    'TYPO3.Neos:Content': TRUE
+  ui:
+    label: 'Wistia Video'
+    help:
+      message: |
+        Embed videos from [wistia.com](https://wistia.com).
+    icon: 'icon-facetime-video'
+    inspector:
+      groups:
+        wistia:
+          label: 'Video options'
+          position: 10
+        wistiaSize:
+          label: 'Video fixed size options'
+          position: 20
+          collapsed: true
+        wistiaInline:
+          label: 'Video inline mode options'
+          position: 30:
+        wistiaPopover:
+          label: 'Video popover link text'
+          position: 40:
+          collapsed: true
+  properties:
+    videoId:
+      type: string
+      ui:
+        label: 'Wistia Video ID'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistia'
+          position: 10
+      validation:
+        'TYPO3.Neos/Validation/StringLengthValidator':
+          minimum: 1
+          maximum: 32
+        regularExpression:
+          regularExpression: '/^[-_a-z0-9]+$/i'
+    embedMode:
+      type: string
+      defaultValue: 'inline'
+      ui:
+        label: 'Video embedding mode'
+        help:
+          message: |
+            Embedding means putting a video on the website.
+            There are couple of ways to do that:
+
+            * *Inline*: embeds the video directly on the page,
+               inline with the rest of the content.
+            * *Inline (fallback)*: use it if the standard *inline* gives you
+               some trouble. Some website might require using this option.
+            * *Popover: thumbnail* displays thumbnail of the video. When clicked,
+               the video is played in a modal window (i.e. pop over).
+            * *Popover: link* displays clickable text/link. When clicked,
+               the video is played in a modal window (pop over).
+
+            Visit [Wistia Help Center](http://wistia.com/doc/embedding) for more information.
+
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistia'
+          position: 20
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              inline:
+                label: 'Inline'
+              inlineIframe:
+                label: 'Inline (fallback)'
+              popoverThumbnail:
+                label: 'Popover: thumbnail'
+              popoverLink:
+                label: 'Popover: link'
+    size:
+      type: string
+      defaultValue: 'responsive'
+      ui:
+        label: 'Video size'
+        help:
+          message: |
+            * *responsive* (recommended): video will resize to fit its container width.
+            * *fixed*: set a fixed size in `px` (see options below). Not recommended
+              if you aim to target different screen sizes.
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistia'
+          position: 50
+          editor: Content/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            values:
+              responsive:
+                label: 'Responsive'
+              fixed:
+                label: 'Fixed size'
+    width:
+      type: integer
+      defaultValue: 640
+      ui:
+        label: 'Width'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistiaSize'
+          position: 20
+    height:
+      type: integer
+      defaultValue: 320
+      ui:
+        label: 'Height'
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistiaSize'
+          position: 40
+    popoverLinkText:
+      type: string
+      ui:
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistiaPopover'
+          position: 10
+          editorOptions:
+            placeholder: 'Watch Video'
+    popoverLinkHtml:
+      type: string
+      ui:
+        label: '...or provide custom HTML code'
+        help:
+          message: |
+            Instead of providing just link text in the field above,
+            specify any HTML code. The most outer HTML element will be
+            made clickable and will trigger video in pop over window.
+        reloadIfChanged: TRUE
+        inspector:
+          group: 'wistiaPopover'
+          position: 20
+          editor: 'TYPO3.Neos/Inspector/Editors/CodeEditor'
+          editorOptions:
+            label: 'Edit HTML code'

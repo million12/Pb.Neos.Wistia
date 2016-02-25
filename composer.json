@@ -1,0 +1,17 @@
+{
+    "name": "pb/neos-wistia",
+    "type": "typo3-flow-plugin",
+    "description": "Wistia.com video inside Neos CMS",
+    "license": ["MIT"],
+    "authors": [
+        { "name": "Marcin Ryzycki", "role": "Developer", "email": "marcin@m12.io", "homepage": "http://m12.io" }
+    ],
+    "require": {
+        "typo3/neos": "~2.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Pb\\Neos\\Wistia": "Classes"
+        }
+    }
+}
